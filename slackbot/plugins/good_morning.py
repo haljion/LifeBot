@@ -6,6 +6,33 @@ import functions
 
 @listen_to("おはよう")
 def morning(message):
-    result = functions.operation_info()
-    bot_message = f"*東西線 運行情報*\n{result[0]}\n{result[1]}"
-    message.send(bot_message)
+    operations = functions.operation_info()
+    weathers = functions.weather_info()
+
+    operation_message = f"*東西線 運行情報*\n{operations[0]}\n{operations[1]}"
+    
+    today_weather_message = f"*今日の天気*\n{weathers[0]}\n最高気温:{weathers[1]}℃\
+        \n最低気温:{weathers[2]}℃"
+    
+    tomorrow_weather_message = f"*明日の天気*\n{weathers[3]}\n最高気温:{weathers[4]}℃\
+        \n最低気温:{weathers[5]}℃"
+    
+    week_info = weathers[6]
+    tmp = [washing for dates, weather, washing in week_info]
+    today_washing_status = tmp[0]
+    tomorrow_washing_status = tmp[1]
+
+    washing_message = f"*洗濯指数*\n今日:{today_washing_status}\
+        \n明日:{tomorrow_washing_status}"
+    
+    message.send(operation_message)
+    message.send(today_weather_message)
+    message.send(tomorrow_weather_message)
+    message.send(washing_message)
+
+@listen_to("おでかけ")
+def morning(message):
+    operations = functions.operation_info()
+    operation_message = f"*東西線 運行情報*\n{operations[0]}\n{operations[1]}"
+    
+    message.send(operation_message)
