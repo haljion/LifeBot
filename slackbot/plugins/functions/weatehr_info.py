@@ -1,37 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-def operation_info():
-
-    # return値
-    return_list = []
-
-    # 東西線の運行情報(Yahoo)
-    url = "https://transit.yahoo.co.jp/traininfo/detail/135/0/"
-    response = requests.get(url)
-    bs = BeautifulSoup(response.text, "html.parser")
-
-    # 運行ステータス
-    div_status = bs.select_one("#mdServiceStatus")
-
-    # ステータス
-    status = div_status.select_one("dt")
-    status = status.text.strip()
-    status = status.split("]")[1]
-
-    # メッセージ
-    message = div_status.select_one("dd")
-    message = message.select_one("p")
-    message = message.text.strip()
-
-    return_list += [status, message]
-    return return_list
-
-
 def weather_info():
-    # return値
-    return_list = []
-
     # 市川市の天気予報
     url = "https://tenki.jp/forecast/3/15/4510/12203/"
     response = requests.get(url)
@@ -109,6 +79,7 @@ def weather_info():
     # 1週間の日付、天気、洗濯指数
     week_weather_info = zip(date_list[:7], weather_list[:7], washing_list[:7])
 
-    return_list += [today_weather, high_temp, low_temp, \
+    # return値
+    return_list = [today_weather, high_temp, low_temp, \
         tomorrow_weather, t_high_temp, t_low_temp, week_weather_info]
     return return_list
