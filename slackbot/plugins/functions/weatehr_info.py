@@ -2,6 +2,12 @@ import requests
 from bs4 import BeautifulSoup
 
 def weather_info():
+    """
+    市川市の天気予報、洗濯指数等を取得するメソッド
+    return: [今日の天気, 最高気温, 最低気温,
+    明日の天気, 最高気温, 最低気温, 週間天気予報]
+    """
+
     # 市川市の天気予報
     url = "https://tenki.jp/forecast/3/15/4510/12203/"
     response = requests.get(url)

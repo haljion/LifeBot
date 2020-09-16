@@ -2,6 +2,10 @@ import requests
 from bs4 import BeautifulSoup
 
 def operation_info():
+    """
+    東京メトロ東西線の運行情報を取得するメソッド
+    return: [運行情報, メッセージ]
+    """
     # 東西線の運行情報(Yahoo)
     url = "https://transit.yahoo.co.jp/traininfo/detail/135/0/"
     response = requests.get(url)

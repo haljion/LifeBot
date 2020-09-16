@@ -7,6 +7,12 @@ from .functions import weatehr_info as wi
 
 @listen_to("おはよう")
 def morning(message):
+    """
+    ・コマンド形式
+    おはよう
+
+    東西線の運行情報と天気予報をSlackに投稿するメソッド
+    """
     operations = to.operation_info()
     weathers = wi.weather_info()
 
