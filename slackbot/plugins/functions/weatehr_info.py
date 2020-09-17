@@ -68,7 +68,6 @@ def weather_info():
                 dates = dates.text.strip()
                 dates = dates.replace("月", "/").replace("日", "")
                 date_list.append(dates)
-                print(dates)
         elif th == "天気":
             for weathers in tr.select("p"):
                 weathers = weathers.text.strip()
@@ -76,7 +75,6 @@ def weather_info():
 .replace("雨", ":umbrella:").replace("曇", ":cloud:")\
 .replace("のち", "→").replace("時々", "or")
                 weather_list.append(weathers)
-                print(weathers)
         else:
             continue
 
