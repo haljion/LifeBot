@@ -1,4 +1,5 @@
 # coding: utf-8
+import os
 
 # botアカウントのトークンはheroku上で指定
 API_TOKEN = os.environ["API_TOKEN"]
