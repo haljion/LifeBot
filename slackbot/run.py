@@ -3,7 +3,6 @@
 import sys
 sys.path.append("C:\\workspace_app\\LifeBot\\slackbot\\plugins")
 from slackbot.bot import Bot
-import functions
 
 def main():
     bot = Bot()
