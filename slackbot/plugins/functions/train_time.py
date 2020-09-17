@@ -38,11 +38,6 @@ def train_time_info(mode, time, fromsta="南行徳", tosta="南行徳"):
     if hour != "99":
         selectbox_h = Select(driver.find_element_by_id("hh"))
         selectbox_h.select_by_value(hour)
-        # 分の項目は画面上では指定されるが、
-        # 遷移した際に適用されず現在時刻の分になってしまう。
-        # name属性が無いのが原因？要調査
-        # selectbox_m = Select(driver.find_element_by_id("mm"))
-        # selectbox_m.select_by_value(minute)
     
     # 出発時刻 or 到着時刻 を選択
     if mode == "t":
@@ -52,16 +47,20 @@ def train_time_info(mode, time, fromsta="南行徳", tosta="南行徳"):
     driver.find_element_by_id("searchModuleSubmit").submit()
     sleep(3)
 
-    # 分だけの為に二度画面遷移するパワープレイ
+    # 現在時刻のうち分の値が検索結果に適用されない為、
+    # クエリを直接追加し再度画面遷移する(要調査)
     if hour != "99":
         url = driver.current_url
         url += f"&m1={minute[0]}&m2={minute[1]}"
         driver.get(url)
         sleep(3)
-
+    
+    # 直近の検索結果のうち、時刻を取得してリストに格納
     train_times = driver.find_elements_by_css_selector("#route01 ul.time li")
     time_list = [t_time.text.strip() for t_time in train_times]
     timeset_list = []
+    # 乗換がある場合、1駅辺り2つの時刻(到着時刻、出発時刻)
+    # が存在する為、[到着時刻、出発時刻]のリスト型でリストに格納
     for i in range(len(time_list)):
         if i == 0 or i == len(time_list) - 1:
             timeset_list.append(time_list[i])
@@ -70,11 +69,14 @@ def train_time_info(mode, time, fromsta="南行徳", tosta="南行徳"):
         else:
             continue
     
+    # 直近の検索結果のうち、駅名を取得してリストに格納
     stations = driver.find_elements_by_css_selector("#route01 .station dl dt a")
     station_list = [sta.text.strip() for sta in stations]
 
+    # 直近の検索結果のうち、路線情報を取得してリストに格納
     routes = driver.find_elements_by_css_selector("#route01 li.transport div")
     route_list = [route.text.strip().replace("[train]\n", "") for route in routes]
+    # 到着駅に付随する路線情報は無い為、数合わせ
     route_list.append("目的地")
 
     driver.quit()
@@ -84,5 +86,6 @@ def train_time_info(mode, time, fromsta="南行徳", tosta="南行徳"):
     label_list[0] = "出発"
     label_list[-1] = "到着"
 
+    # reurn値
     return_list = list(zip(label_list, station_list, timeset_list, route_list))
     return return_list

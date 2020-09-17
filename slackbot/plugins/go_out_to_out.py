@@ -4,7 +4,7 @@ from slackbot.bot import default_reply # 設定外のワードに対する反応
 from .functions import train_operation as to
 from .functions import train_time as tt
 
-@listen_to("おでかけ .*")
+@listen_to("おでかけ.*")
 def morning(message):
     """
     ・コマンド形式
@@ -20,27 +20,31 @@ def morning(message):
 
     # 乗り換え案内
     # Slackに送られたメッセージを取得
-    tmp = message.body["text"].split(" ")
-    fromsta = tmp[1]
-    tosta = tmp[2]
-    time = ""
-    if len(tmp) == 4:
-        time = tmp[3]
+    try:
+        tmp = message.body["text"].split(" ")
+        fromsta = tmp[1]
+        tosta = tmp[2]
+        time = ""
+        if len(tmp) == 4:
+            time = tmp[3]
+        else:
+            time = "9999"
+    
+        train_time_info = tt.train_time_info(fromsta=fromsta, tosta=tosta, time=time, mode="f")
+    except:
+        message.send("エラーが発生したよ\n\
+「おしえて」コマンドでもう一度使い方を確認してみてね")
     else:
-        time = "9999"
-    
-    train_time_info = tt.train_time_info(tosta=tosta, fromsta=fromsta, time=time, mode="f")
-    
-    train_message = ""
+        train_message = ""
 
-    for label, sta, time, train in train_time_info:
-        if type(time) == list:
-            time = " ".join(time)
-        # 1行単位のメッセージ
-        message_line = f"*{label}* {time}\n*:station: {sta}*\n{train}\n\n"
-        train_message += message_line
+        for label, sta, time, train in train_time_info:
+            if type(time) == list:
+                time = " ".join(time)
+            # 1行単位のメッセージ
+            message_line = f"*{label}* {time}\n*:station: {sta}*\n{train}\n\n"
+            train_message += message_line
     
-    train_message = train_message[:-6]
+        train_message = train_message[:-6]
 
-    message.send(operation_message)
-    message.send(train_message)
+        message.send(operation_message)
+        message.send(train_message)

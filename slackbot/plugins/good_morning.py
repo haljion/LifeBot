@@ -13,26 +13,26 @@ def morning(message):
 
     東西線の運行情報と天気予報をSlackに投稿するメソッド
     """
-    operations = to.operation_info()
-    weathers = wi.weather_info()
+    # 運行情報
+    status, mes = to.operation_info()
+    operation_message = f"*東西線 運行情報*\n{status}\n{mes}"
+    
+    # 天気予報
+    week_info, temp_info = wi.weather_info()
+    weather_message = ""
+    washing_message = "*洗濯指数*\n"
+    count = 0
+    
+    for dates, weather, washing in week_info:
+        if count > 1:
+            break
+        # 最高気温, 最低気温
+        high, low = temp_info[dates]
+        weather_message += f"*{dates}の天気*\n{weather}\n最高気温:{high}℃\
+        \n最低気温:{low}℃\n"
+        washing_message += f"{dates}:{washing}\n"
+        count += 1
 
-    operation_message = f"*東西線 運行情報*\n{operations[0]}\n{operations[1]}"
-    
-    today_weather_message = f"*今日の天気*\n{weathers[0]}\n最高気温:{weathers[1]}℃\
-        \n最低気温:{weathers[2]}℃"
-    
-    tomorrow_weather_message = f"*明日の天気*\n{weathers[3]}\n最高気温:{weathers[4]}℃\
-        \n最低気温:{weathers[5]}℃"
-    
-    week_info = weathers[6]
-    tmp = [washing for dates, weather, washing in week_info]
-    today_washing_status = tmp[0]
-    tomorrow_washing_status = tmp[1]
-
-    washing_message = f"*洗濯指数*\n今日:{today_washing_status}\
-        \n明日:{tomorrow_washing_status}"
-    
     message.send(operation_message)
-    message.send(today_weather_message)
-    message.send(tomorrow_weather_message)
+    message.send(weather_message)
     message.send(washing_message)
