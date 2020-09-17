@@ -30,9 +30,10 @@ def go_out_f(message):
             time = "9999"
     
         train_time_info = tt.train_time_info(tosta=tosta, time=time, mode="f")
-    except:
+    except Exception as e:
         message.send("エラーが発生したよ\n\
 「おしえて」コマンドでもう一度使い方を確認してみてね")
+        message.send(e.args)
     else:
         train_message = ""
 
