@@ -7,7 +7,7 @@ dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 
 # botアカウントのトークンを指定
-API_TOKEN = os.environ.get("API_TOKEN")
+API_TOKEN = os.environ["API_TOKEN"]
 
 # このbot宛のメッセージで、どの応答にも当てはまらない場合の応答文字列
 DEFAULT_REPLY = "「おしえて」って投稿すると使い方を表示するよ"
