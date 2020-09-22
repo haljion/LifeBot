@@ -95,8 +95,8 @@ def weather_info():
     for w_status in week_washing:
         washing_list.append(w_status.text.strip())
     
-    conv_list = {"部屋干し推奨": "☆", "やや乾く": "☆"*2,\
-         "乾く": "☆"*3, "よく乾く": "☆"*4, "大変よく乾く": "☆"*5}
+    conv_list = {"部屋干し推奨": "★☆☆☆☆", "やや乾く": "★★☆☆☆",\
+         "乾く": "★★★☆☆", "よく乾く": "★★★★☆", "大変よく乾く": "★★★★★"}
     for i in range(len(washing_list)):
         washing_list[i] = conv_list[washing_list[i]]
     

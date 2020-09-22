@@ -29,6 +29,9 @@ def morning(message):
     :cat: おでかけ 出発駅 到着駅 (出発時刻) :cat:\n
     東西線の運行情報と出発駅~到着駅の乗換案内を教えるよ\n
     時間は省略すると現在時刻になるよ\n
+
+    :cat: ありがと :cat:\n
+    しゃべるよ\n
     """
     
     message.send(help_message)
