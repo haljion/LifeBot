@@ -8,9 +8,6 @@ from .functions import train_time as tt
 def morning(message):
     help_message = """
     【コマンド一覧】\n
-    :cat: おはよう :cat:\n
-    天気予報・東西線の運行情報を教えるよ\n\n
-
     :cat: てんき :cat:\n
     一週間の天気予報を教えるよ\n\n
 
