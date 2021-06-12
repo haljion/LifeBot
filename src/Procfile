@@ -1,1 +1,1 @@
-lifebot: python slackbot/run.py
+lifebot: python src/slackbot/run.py
